@@ -1,48 +1,50 @@
 import "./SearchBox.css";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import { useState } from "react";
 
-export default function Searchbox() {
-    let [City, setCity] = useState("");
+export default function Searchbox({ updateinfo }) {
+    const [City, setCity] = useState("");
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
     const API_Key = "b3551b4e29fda8fc49521a24e8127165";
 
     const getWeatherInfo = async () => {
-    
-            const response = await fetch(`${API_URL}?q=${City}&appid=${API_Key}`)
-            let responsejson = await response.json();
+        try {
+            const response = await fetch(`${API_URL}?q=${City}&appid=${API_Key}&units=metric`);
+            const responsejson = await response.json();
             console.log(responsejson);
-           
-        let result={
-            city:City,
-            temp: responsejson.main.temp,
-            humidity: responsejson.main.humidity,
-            weather: responsejson.weather[0].description,
-            temMax: responsejson.main.temp_max,
-            temMin: responsejson.main.temp_min,
-            wind: responsejson.wind.speed,
+    
+            return {
+                city: responsejson.name,
+                temp: responsejson.main.temp,
+                humidity: responsejson.main.humidity,
+                weather: responsejson.weather[0].description,
+                tempMax: responsejson.main.temp_max,
+                tempMin: responsejson.main.temp_min,
+                wind: responsejson.wind.speed,
+            };
+        } catch (error) {
+            console.error("API call failed:", error);
+            return null;
         }
-        console.log(result);
     };
+    
 
     const handleChange = (evt) => {
         setCity(evt.target.value);
     };
 
-    const handleSubmit = (evt) => {
+    const handleSubmit = async (evt) => {
         evt.preventDefault();
-        if (City.trim() === "") {
-            alert("City name cannot be empty");
-            return;
+        const newInfo = await getWeatherInfo();
+        if (newInfo) {
+            updateinfo(newInfo);
         }
-        getWeatherInfo();
-        setCity(""); // Clear input after fetching weather data
+        setCity("");
     };
 
     return (
         <div className="Textfield">
-            
             <form onSubmit={handleSubmit}>
                 <TextField
                     id="city"
@@ -56,10 +58,7 @@ export default function Searchbox() {
                 <Button variant="contained" type="submit">
                     Search
                 </Button>
-               
             </form>
-            
-    
         </div>
     );
 }
