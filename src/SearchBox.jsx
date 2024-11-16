@@ -1,5 +1,6 @@
 import "./SearchBox.css";
 import TextField from "@mui/material/TextField";
+import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
@@ -44,9 +45,10 @@ export default function Searchbox({ updateinfo }) {
     };
 
     return (
-        <div className="Textfield">
+        <div className="searchbox">
             <form onSubmit={handleSubmit}>
                 <TextField
+                className="inputfield"
                     id="city"
                     label="Enter City"
                     variant="outlined"
