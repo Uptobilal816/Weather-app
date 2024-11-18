@@ -1,6 +1,5 @@
 import "./SearchBox.css";
 import TextField from "@mui/material/TextField";
-import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
@@ -14,7 +13,7 @@ export default function Searchbox({ updateinfo }) {
             const response = await fetch(`${API_URL}?q=${City}&appid=${API_Key}&units=metric`);
             const responsejson = await response.json();
             console.log(responsejson);
-    
+
             return {
                 city: responsejson.name,
                 temp: responsejson.main.temp,
@@ -29,7 +28,6 @@ export default function Searchbox({ updateinfo }) {
             return null;
         }
     };
-    
 
     const handleChange = (evt) => {
         setCity(evt.target.value);
@@ -45,19 +43,25 @@ export default function Searchbox({ updateinfo }) {
     };
 
     return (
-        <div className="searchbox">
+        <div className="searchbox" style={{ textAlign: 'center', marginTop: '20px' }}>
             <form onSubmit={handleSubmit}>
                 <TextField
-                className="inputfield"
                     id="city"
                     label="Enter City"
                     variant="outlined"
                     required
                     value={City}
                     onChange={handleChange}
+                    sx={{
+                        color: "white",              // Text color inside the input
+                        backgroundColor: "rgba(255, 255, 255, 0.7)",  // Semi-transparent background
+                        borderRadius: "5px",         // Border radius for rounded corners
+                        width: "250px",              // Set input width
+                        marginBottom: "20px",        // Space below input field
+                    }}
                 />
-                <br /><br />
-                <Button variant="contained" type="submit">
+                <br />
+                <Button variant="contained" type="submit" sx={{ marginTop: "10px" }}>
                     Search
                 </Button>
             </form>

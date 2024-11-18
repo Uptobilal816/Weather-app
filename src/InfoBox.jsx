@@ -8,13 +8,13 @@ export default function InfoBox({ info }) {
 
     return (
         <div className="Infobox">
-            <Card sx={{ maxWidth: 345 }}>
-                <CardMedia
-                    sx={{ height: 140 }}
+            <Card  className="card" sx={{ maxWidth: 345 , borderRadius:5}}>
+                <CardMedia 
+                    sx={{ height: 140}}
                     image="https://images.unsplash.com/photo-1680352267694-a7fd4c33d4e1?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     title="Weather Image"
                 />
-                <CardContent>
+                <CardContent >
                     <div>
                         <h2>Today's Weather Report for {info.city}</h2>
                         <p>Temperature: {info.temp}&deg;C</p>
